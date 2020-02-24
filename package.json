@@ -1,19 +1,27 @@
 {
   "name": "json-db",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "in-memory-db for json data in nodejs application",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barakaally/json-db.git"
+  },
   "keywords": [
-    "inMemoryDb",
+    "in-memory-db",
     "json-db",
     "database",
     "nosql"
   ],
+  "bugs": {
+    "url": "https://github.com/barakaally/json-db/issues"
+  },
+  "homepage": "https://github.com/barakaally/json-db#readme",
   "author": "Baraka Ally <baraka.ally.co.tz@gmail.com>",
   "license": "ISC",
   "dependencies": {
