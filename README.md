@@ -3,7 +3,7 @@ In-Memory-db for json data in nodejs (javascript or typescript ) application
 
 # installation
 install [jsonb-cli](https://github.com/barakaally/jsonb-cli) then type
-``json install``
+``jsonb install``
 or
 ``npm install jsonb-db ``
 
