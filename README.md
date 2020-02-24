@@ -1,16 +1,16 @@
-# json-db
+# jsonb-db
 In-Memory-db for json data in nodejs (javascript or typescript ) application
 
 # installation
-install [json-cli](https://github.com/barakaally/json-cli) then type
+install [json-cli](https://github.com/barakaally/jsonb-cli) then type
 ``json install``
 or
-``npm install json-db ``
+``npm install jsonb-db ``
 
 # usage
 import json-db module in a project
 
-```const db = require("json-db");```
+```const db = require("jsonb-db");```
 
 ```db.collections()``` get list of avalable collections in Db
 
