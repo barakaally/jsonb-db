@@ -1,6 +1,6 @@
 {
   "name": "jsonb-db",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "in-memory-db for json data in nodejs application",
   "main": "index.js",
   "types": "index.d.ts",
@@ -14,7 +14,7 @@
   },
   "keywords": [
     "in-memory-db",
-    "json-db",
+    "jsonb-db",
     "database",
     "nosql"
   ],
