@@ -1,5 +1,5 @@
 {
-  "name": "json-db",
+  "name": "jsonb-db",
   "version": "0.1.0",
   "description": "in-memory-db for json data in nodejs application",
   "main": "index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/barakaally/json-db.git"
+    "url": "git+https://github.com/barakaally/jsonb-db.git"
   },
   "keywords": [
     "in-memory-db",
@@ -19,9 +19,9 @@
     "nosql"
   ],
   "bugs": {
-    "url": "https://github.com/barakaally/json-db/issues"
+    "url": "https://github.com/barakaally/jsonb-db/issues"
   },
-  "homepage": "https://github.com/barakaally/json-db#readme",
+  "homepage": "https://github.com/barakaally/jsonb-db#readme",
   "author": "Baraka Ally <baraka.ally.co.tz@gmail.com>",
   "license": "ISC",
   "dependencies": {
