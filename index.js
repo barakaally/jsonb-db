@@ -1,34 +1,34 @@
-const jsonDb = require("./lib/json-db");
+const Db = require("./lib/json-db");
 
-class Database {
+class JsonbDb {
 
     constructor() { }
     /**
      * @return {string[]} arrays of collections name
      */
     collections() {
-        return jsonDb.collections();
+        return Db.collections();
     }
 
     /**
      * create collection in a database
-     * @param {String} collectionName
-     * @param {Object} data
+      @param {String} collectionName
+      @param {Object} data
     * @return {{status:Boolean,message:string}} responseMessage
     */
     createCollection(collectionName, data) {
-        return jsonDb.createCollection(collectionName, data);
+        return Db.createCollection(collectionName, data);
 
     }
 
     /**
      * update collection in a database
-     * @param {String} oldcollectionName
-     *  @param {String} oldcollectionName
+     *@param {String} oldcollectionName
+      @param {String} oldcollectionName
     * @return {{status:Boolean,message:string}} responseMessage
     */
     updateCollection(oldCollectionName, newCollectionName) {
-        return jsonDb.updateCollection(oldCollectionName, newCollectionName);
+        return Db.updateCollection(oldCollectionName, newCollectionName);
     }
 
     /**
@@ -37,18 +37,19 @@ class Database {
   * @return {{status:Boolean,message:string}} responseMessage
   */
     dropCollection(collectionName) {
-        return jsonDb.dropCollection(collectionName);
+        return Db.dropCollection(collectionName);
     }
     /**
     * manipulate data stored in collections
-  * @param {String} collection
- */
+    * @param { String } collection
+     */
 
     collection(collection) {
+        if (!collection) throw new Error("CollectionName required");
         return {
             find: (criteria) => (new class {
                 constructor() {
-                    this.query = jsonDb.collection(collection).find(criteria);
+                    this.query = Db.collection(collection).find(criteria);
                     return this;
                 }
                 /**
@@ -56,7 +57,11 @@ class Database {
                  * @param {Number} takerow 
                  */
                 take(takerow) {
-                    this.query.length = takerow;
+                    try {
+                        this.query.length = takerow;
+                    } catch (e) {
+
+                    }
                     return this;
                 }
                 /**
@@ -64,7 +69,12 @@ class Database {
                  * @param {Number} skiprow 
                  */
                 skip(skiprow) {
-                    this.query = this.query.slice(skiprow);
+                    try {
+                        this.query = this.query.slice(skiprow);
+                    } catch (e) {
+
+                    }
+
                     return this;
                 }
                 /**convert array to object
@@ -76,8 +86,7 @@ class Database {
                 /**
                  * format output into pretty readable json fomart  */
                 pretty() {
-                    console.table(JSON.stringify(this.query, null, 4));
-                    return this.query.length + " rows  fetched";
+                    return JSON.stringify(this.query, null, 4);
                 }
                 ;
                 /**
@@ -86,41 +95,48 @@ class Database {
                     console.table(this.query);
                     return this.query.length + " rows  fetched";
                 }
+
+                /**
+                * count total number of rows for provided query
+                * @return {Number} number
+                */
+                count() {
+                    if (Array.isArray(this.query)) {
+                        return this.query.length;
+                    }
+
+                    return 0;
+
+                }
             }),
-            /**
-             * count total number of rows for provided query
-             * @return {Number} number
-             */
-            count: () => jsonDb.collection(collection).find({}).length,
+
             /**
              * insert single object into a databse
              * @param {Object} value
-             * @return {any[]} insertedIds
+             * @return insertedIds
              */
-            insert: (value) => jsonDb.collection(collection).insert(value),
+            insert: (value) => Db.collection(collection).insert(value),
             /**
              * insert multiple object into a database
-             * @param { [Object]} values
-             * @return {any[]} insertedIds
+             * @param { Array } values
              */
-            insertMany: (values) => jsonDb.collection(collection).insertMany(values),
+            insertMany: (values) => Db.collection(collection).insertMany(values),
             /**
              * update  items into a databse
              * @param {Object} Object
              * @param {Object} value
-             * @return {any[]} udateditems
              */
-            update: (criteria, value) => jsonDb.collection(collection).update(criteria, value),
+            update: (criteria, value) => Db.collection(collection).update(criteria, value),
             /**
             * remove  items from a databse
             * @param {Object} criteria
             * @param {Object} value
-            * @return {any[]} removed items
+            * @return  removed items
             */
-            remove: (criteria) => jsonDb.collection(collection).remove(criteria),
+            remove: (criteria) => Db.collection(collection).remove(criteria),
         }
     }
 
 }
 
-module.exports = new Database();
+module.exports = { JsonbDb };
