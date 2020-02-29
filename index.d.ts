@@ -5,7 +5,7 @@ export declare class JsonbDb {
    * @return Array of any fetched items
    */
   private query: any[];
-  constructor(configs: { dbPath: string });
+  constructor(configs: { db: string });
   /**
    * get available collection
    * @return List of collections
