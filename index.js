@@ -1,13 +1,17 @@
 const Db = require("./lib/json-db");
 
-class JsonbDb {
+class JsonbDb extends Db {
 
-    constructor() { }
+    constructor(configs = { db }) {
+        super(configs)
+
+    }
     /**
-     * @return {string[]} arrays of collections name
-     */
+    * @return {string[]} arrays of collections name
+    */
     collections() {
-        return Db.collections();
+
+        return this.dbCollections();
     }
 
     /**
@@ -17,7 +21,7 @@ class JsonbDb {
     * @return {{status:Boolean,message:string}} responseMessage
     */
     createCollection(collectionName, data) {
-        return Db.createCollection(collectionName, data);
+        return this.dbCreateCollection(collectionName, data);
 
     }
 
@@ -28,7 +32,7 @@ class JsonbDb {
     * @return {{status:Boolean,message:string}} responseMessage
     */
     updateCollection(oldCollectionName, newCollectionName) {
-        return Db.updateCollection(oldCollectionName, newCollectionName);
+        return this.dbUpdateCollection(oldCollectionName, newCollectionName);
     }
 
     /**
@@ -37,7 +41,7 @@ class JsonbDb {
   * @return {{status:Boolean,message:string}} responseMessage
   */
     dropCollection(collectionName) {
-        return Db.dropCollection(collectionName);
+        return this.dbDropCollection(collectionName);
     }
     /**
     * manipulate data stored in collections
@@ -45,32 +49,48 @@ class JsonbDb {
      */
 
     collection(collection) {
+
         if (!collection) throw new Error("CollectionName required");
         return {
-            find: (criteria) => (new class {
-                constructor() {
-                    this.query = Db.collection(collection).find(criteria);
+            find: (criteria) => new class {
+
+                /**
+                 *@param { JsonbDb } base 
+                 */
+                constructor(base) {
+                    this.query = [];
+                    let dbQuery = base.dbCollection(collection).find(criteria);
+                    if (dbQuery != null) {
+                        this.query = dbQuery;
+                    }
+
                     return this;
                 }
                 /**
-                 * limit number of output for exeuted query
-                 * @param {Number} takerow 
+                * limit number of output for exeuted query
+                * @param {Number} rows
                  */
-                take(takerow) {
+                take(rows) {
+                    if (typeof rows != 'number') throw new Error("input row paramater must be a number");
+
                     try {
-                        this.query.length = takerow;
+                        this.query.length = rows;
                     } catch (e) {
 
                     }
+
                     return this;
                 }
                 /**
-                 * skip rows when retriving data from db
-                 * @param {Number} skiprow 
-                 */
-                skip(skiprow) {
+                * skip rows when retriving data from db
+                * @param {Number} rows 
+                */
+                skip(rows) {
+
+                    if (typeof rows != 'number') throw new Error("input row paramater must be a number");
+
                     try {
-                        this.query = this.query.slice(skiprow);
+                        this.query = this.query.slice(rows);
                     } catch (e) {
 
                     }
@@ -88,9 +108,11 @@ class JsonbDb {
                 pretty() {
                     return JSON.stringify(this.query, null, 4);
                 }
-                ;
+
                 /**
-                 * format  output into tabular form  */
+                 * format  output into tabular form  
+                 * 
+                 * */
                 table() {
                     console.table(this.query);
                     return this.query.length + " rows  fetched";
@@ -108,32 +130,35 @@ class JsonbDb {
                     return 0;
 
                 }
-            }),
+
+
+
+            }(this),
 
             /**
              * insert single object into a databse
              * @param {Object} value
              * @return insertedIds
              */
-            insert: (value) => Db.collection(collection).insert(value),
+            insert: (value) => this.dbCollection(collection).insert(value),
             /**
              * insert multiple object into a database
              * @param { Array } values
              */
-            insertMany: (values) => Db.collection(collection).insertMany(values),
+            insertMany: (values) => this.dbCollection(collection).insertMany(values),
             /**
              * update  items into a databse
              * @param {Object} Object
              * @param {Object} value
              */
-            update: (criteria, value) => Db.collection(collection).update(criteria, value),
+            update: (criteria, value) => this.dbCollection(collection).update(criteria, value),
             /**
             * remove  items from a databse
             * @param {Object} criteria
             * @param {Object} value
             * @return  removed items
             */
-            remove: (criteria) => Db.collection(collection).remove(criteria),
+            remove: (criteria) => this.dbCollection(collection).remove(criteria),
         }
     }
 

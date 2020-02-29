@@ -1,6 +1,6 @@
 {
   "name": "jsonb-db",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "in-memory-db for json data in nodejs application",
   "main": "index.js",
   "types": "index.d.ts",
@@ -11,9 +11,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/barakaally/jsonb-db.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [
     "in-memory-db",

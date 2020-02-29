@@ -8,44 +8,77 @@ or
 ``npm install jsonb-db ``
 
 # usage
-import json-db module in a project
+import json-db module in a project and instatiate JsonbDb class with db name as parameter
 
-```const {JsonbDb} = require("jsonb-db")```
+```
+  const {JsonbDb} = require("jsonb-db");
 
-```const db=new JsonbDb() ;```
+  const db=new JsonbDb({db:"databaseName"}) ;
+  ```
 
-```db.collections()``` get list of avalable collections in Db
+Get list of avalable collections in Db
+ 
+ - ```db.collections()``` 
 
-```db.createCollection("collectionName")``` create empty collection
+Create empty collection
 
-```db.createCollection("collectionName",data)``` create collection with data
+ - ```db.createCollection("collectionName")``` 
 
-```db.updateCollection("oldcollectionName","oldcollectionName")``` rename collection
+ create collection with data
 
-```db.dropCollection("collectionName")``` delete collection
+- ```db.createCollection("collectionName",data)``` 
 
-```db.collection("collectionName").find(criteria)``` fetch data from selected collection based on search criteria **NOTE** leave criteria                                                        empty if you want to search all data
+rename collection
 
-```db.collection("collectionName").find(criteria).skip(rowcount)``` skip numbers of rows while retriving data
+- ```db.updateCollection("oldcollectionName","oldcollectionName")```
 
-```db.collection("collectionName").find(criteria).take(rowcount)``` limit number of rows
+delete collection
+
+- ```db.dropCollection("collectionName")``` 
+
+fetch data from selected collection based on search criteria **NOTE** leave criteria                                                        empty if you want to search all data
+
+- ```db.collection("collectionName").find(criteria)``` 
+
+ skip numbers of rows while retrieving data
+
+- ```db.collection("collectionName").find(criteria).skip(rowcount)```
+
+limit number of output  rows
+
+- ```db.collection("collectionName").find(criteria).take(rowcount)``` 
 
 ```db.collection("collectionName").find(criteria).query``` fetch data in readable json format
 
-```db.collection("collectionName").find(criteria).pretty()``` fetch data and output in  nice look json format 
+fetch data and output in  nice look json format 
 
-```db.collection("collectionName").find(criteria).count()``` fetch total number of output can be retrieved for provided criteria
+- ```db.collection("collectionName").find(criteria).pretty()``` 
 
-```db.collection("collectionName").find(criteria).table()``` fetch data and output in  tabular form 
+fetch total number of output can be retrieved for provided criteria
 
-```db.collection("collectionName").find(criteria).toObject``` Convert response to object 
+- ```db.collection("collectionName").find(criteria).count()``` 
 
-```db.collection("collectionName").insert(value)``` insert object into a collection, new collection will be created if not exist
+fetch data and output in  tabular form 
 
-```db.collection("collectionName").insertMany(values)``` insert many object into a collection, new collection will be created if not existed
+- ```db.collection("collectionName").find(criteria).table()``` 
 
+Convert response to object 
 
-```db.collection("collectionName").remove(criteria)``` delete items inside a collection based on search criteria
+- ```db.collection("collectionName").find(criteria).toObject``` 
 
-```db.collection("collectionName").update(criteria,value)``` update items in a collection based on search criteria
+insert object into a collection, new collection will be created if not exist
+
+- ```db.collection("collectionName").insert(value)``` 
+
+insert many object into a collection, new collection will be created if not existed
+
+- ```db.collection("collectionName").insertMany(values)``` 
+
+delete items inside a collection based on search criteria
+
+- ```db.collection("collectionName").remove(criteria)``` 
+
+update items in a collection based on search criteria
+
+- ```db.collection("collectionName").update(criteria,value)``` 
 
