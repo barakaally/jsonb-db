@@ -83,7 +83,7 @@ export declare class JsonbDb {
         * @param value   @description object  to be updated
         * @return Array of updated items
         */
-    update(criteria: object, value: object): any[];
+    update(criteria: object, value: object): { updatedItems: any[] };
 
     /**
       * delete  items inside a collection
